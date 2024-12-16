@@ -43,12 +43,15 @@ local function OnCreateMove(userCmd)
     local closestDistance = 500
 
     for _, projectile in pairs(projectiles) do
-        local projectilePos = projectile:GetAbsOrigin()
-        local distance = (pLocal:GetAbsOrigin() - projectilePos):Length()
+        local owner = projectile:GetOwner()
+        if owner and owner:GetTeamNumber() ~= pLocal:GetTeamNumber() then
+            local projectilePos = projectile:GetAbsOrigin()
+            local distance = (pLocal:GetAbsOrigin() - projectilePos):Length()
 
-        if distance < closestDistance then
-            closestDistance = distance
-            closestProjectile = projectile
+            if distance < closestDistance then
+                closestDistance = distance
+                closestProjectile = projectile
+            end
         end
     end
 
